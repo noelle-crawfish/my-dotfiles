@@ -28,7 +28,7 @@
 ;; consult for autocomplete (bc I want to be a cool kid)
 ;; (use-package consult)
 
-;; and vertico
+;; and vertico TODO I'm not using this right
 (use-package vertico
   :custom
   (vertico-count 20)
@@ -79,15 +79,22 @@
             (add-to-list 'vterm-tramp-shells '("ssh" "/bin/zsh"))
             (add-to-list 'vterm-tramp-shells '("sudo" "/bin/zsh"))))
 
-;; Enable Evil
+;; enable evil
 (use-package evil
   :init
-  ;; (setq evil-want-integration t)
-  ;; (setq evil-want-keybinding nil)
+  (setq evil-want-integration t)
+  (setq evil-want-keybinding nil)
   ;; (setq evil-want-C-i-jump t)
   (setq evil-undo-system 'undo-fu)
   :config
   (evil-mode 1))
+
+;; make sure evil (hjkl mostly) is usable everywhere (fuck you magit)
+(use-package evil-collection
+  :after evil
+  :ensure t
+  :config
+  (evil-collection-init))
 
 ;; undo-fu for undo persistance b/w sessions
 (use-package undo-fu

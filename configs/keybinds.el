@@ -62,6 +62,18 @@ _h_   _l_   _n_ew       _-_ dec height   _\|_  set width
   ("ft" open-theme-dir)
   ("?" (setq hydra-is-helpful t) :exit nil))
 
+;; magit commands
+(defhydra magit-map (:exit t :idle 5 :timeout 5 :hint nil)
+  ("g" magit-status :which-key "magit")
+  ("b" magit-blame :which-key "whodunnit")
+  ("i" vc-annotate :whick-key "investigate"))
+
+;; search functionality
+;; (defhydra search-map (:exit t :idle 5 :timeout 5 :hint nil)
+;;   ;; something something search
+;;   ("SPC" project-search)
+;;   )
+
 ;; SPC is the ultimate leader-key
 (general-create-definer leader-keys
   :states '(insert visual emacs normal)
@@ -70,7 +82,13 @@ _h_   _l_   _n_ew       _-_ dec height   _\|_  set width
   :global-prefix "C-SPC")
 
 (leader-keys
-  ;; reload config files on demand
+  ;; shortcuts for commonly used
+  "f" '(project-search :which-key "project search")
+
+  ;; magit
+  "g" '(magit-map/body :which-key "magit")
+
+  ;; help center + quick access to config files 
   "h" '(help-center/body :which-key "help and configs")
 
   ;; windowing and perspectives
