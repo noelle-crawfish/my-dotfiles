@@ -53,6 +53,11 @@ _h_   _l_   _n_ew       _-_ dec height   _\|_  set width
   (interactive)
   (find-file "~/.config/emacs/themes/"))
 
+(defun open-research-dir ()
+  "Open research directory"
+  (interactive)
+  (find-file "~/research/"))
+
 ;; config file and help
 (defhydra help-center (:exit t :idle 5 :timeout 5 :hint nil)
   ;; "THIS IS THE HELP CENTER -> I want a sane default"
@@ -60,6 +65,7 @@ _h_   _l_   _n_ew       _-_ dec height   _\|_  set width
   ("rt" refresh-theme)
   ("fp" open-config-dir)
   ("ft" open-theme-dir)
+  ("fr" open-research-dir)
   ("?" (setq hydra-is-helpful t) :exit nil))
 
 ;; magit commands
@@ -69,10 +75,12 @@ _h_   _l_   _n_ew       _-_ dec height   _\|_  set width
   ("i" vc-annotate :whick-key "investigate"))
 
 ;; search functionality
-;; (defhydra search-map (:exit t :idle 5 :timeout 5 :hint nil)
-;;   ;; something something search
-;;   ("SPC" project-search)
-;;   )
+ (defhydra search-map (:exit t :idle 5 :timeout 5 :hint nil)
+   ;; something something search
+   ("g" consult-goto-line :which-key "goto line") ;; TODO remove
+   ("s" consult-line :which-key "search file") 
+  )
+
 
 ;; SPC is the ultimate leader-key
 (general-create-definer leader-keys
@@ -83,12 +91,17 @@ _h_   _l_   _n_ew       _-_ dec height   _\|_  set width
 
 (leader-keys
   ;; shortcuts for commonly used
-  "f" '(project-search :which-key "project search")
+  "SPC" '(consult-line-multi :which-key "find in project") ;; TODO look into using consult line multi, consult-grep
+  "f" '(consult-find :which-key "find file in project") 
+  "j" '(consult-goto-line :which-key "goto line") ;; TODO is there a way to make this work nicely w/ evil
+
+  ;; consult features
+  "c" '(search-map/body :which-key "consult your superiors")
 
   ;; magit
   "g" '(magit-map/body :which-key "magit")
 
-  ;; help center + quick access to config files 
+  ;; help center + quick access to files 
   "h" '(help-center/body :which-key "help and configs")
 
   ;; windowing and perspectives

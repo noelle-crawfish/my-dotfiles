@@ -26,14 +26,17 @@
 (add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-view-mode))
     
 ;; consult for autocomplete (bc I want to be a cool kid)
-;; (use-package consult)
+(use-package consult)
 
-;; and vertico TODO I'm not using this right
+;; and vertico 
 (use-package vertico
   :custom
   (vertico-count 20)
   :init
   (vertico-mode))
+
+;; this is a hack to make vertico work w/ evil-mode (: prefixed) commands
+(setq completion-in-region-function 'consult-completion-in-region)
 
 ;; persist history over emacs restarts
 (use-package savehist
@@ -105,4 +108,16 @@
 
 ;; magit
 (use-package magit)
+
+;; zotero
+(use-package zotero
+  :ensure t
+  :commands (zotero-browser)
+  :init
+  (require 'zotero-browser))
+
+;; (setq zotero-auth-token (zotero-auth-token-create :token S2DDaBIFYauVLn9xNZrhG3Yh
+;;                                                   :token-secret S2DDaBIFYauVLn9xNZrhG3Yh
+;;                                                   :userid 16157608
+;;                                                   :username noellecrawfish))
 
